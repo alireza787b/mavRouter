@@ -45,9 +45,9 @@ def serial_ports():
 
 
 app = Tk()
-# app.iconbitmap("favicon.ico")
-app.geometry("500x500")
-app.title("Mavproxy GUI Router V.0.1")
+app.iconbitmap("favicon.ico")
+app.geometry("500x550")
+app.title("Mavproxy GUI Router V.0.2")
 
 
 
@@ -58,13 +58,27 @@ def ref_callback():
     selectedCom = StringVar()
     print (options)
     # initial menu text
-    selectedCom.set( options[-1] )
+    try:
+        selectedCom.set( options[-1] )
+    except: 
+        options = ["No Available Port"]
+        selectedCom.set( options[-1] )
     
 def start_callback():
     global stateMav
     try:
-        print("Already Open. Resetting...")
-        os.killpg(os.getpgid(stateMav.pid), signal.SIGTERM)  # Send the signal to all the process groups
+        print("Checking State...")
+        
+        if sys.platform.startswith('win'):
+            stateMav.send_signal(signal.CTRL_C_EVENT)
+        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+            os.killpg(os.getpgid(stateMav.pid), signal.SIGTERM)  # Send the signal to all the process groups
+        elif sys.platform.startswith('darwin'):
+            os.killpg(os.getpgid(stateMav.pid), signal.SIGTERM)  # Send the signal to all the process groups
+
+        else:
+            raise EnvironmentError('Unsupported platform')    
+        
     except:
         print("Fresh Sart!")
         
@@ -92,23 +106,43 @@ def start_callback():
         comStr += ' --console '
     #app.withdraw()
     
+    
     if sys.platform.startswith('win'):
-        stateMav = subprocess.Popen(comStr, 
-                       shell=True) 
+        stateMav = subprocess.Popen(comStr, shell=True)
+
     elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
         stateMav = subprocess.Popen(comStr,stdout=subprocess.PIPE, 
-                       shell=True, preexec_fn=os.setsid)  
+                       shell=True, preexec_fn=os.setsid)
     elif sys.platform.startswith('darwin'):
         stateMav = subprocess.Popen(comStr,stdout=subprocess.PIPE, 
-                       shell=True, preexec_fn=os.setsid)  
+                       shell=True, preexec_fn=os.setsid)
     else:
         raise EnvironmentError('Unsupported platform')
     
-    
-    
-
     print(comStr)
     #await os.system(comStr)
+    
+    
+def stop_callback():
+    global stateMav
+    try:
+        print("Already Open. Quiting...")
+        
+        if sys.platform.startswith('win'):
+            stateMav.send_signal(signal.CTRL_C_EVENT)
+        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+            os.killpg(os.getpgid(stateMav.pid), signal.SIGTERM)  # Send the signal to all the process groups
+        elif sys.platform.startswith('darwin'):
+            os.killpg(os.getpgid(stateMav.pid), signal.SIGTERM)  # Send the signal to all the process groups
+
+        else:
+            raise EnvironmentError('Unsupported platform')    
+        
+        
+    except:
+        print("Not Open")
+        
+   
 
 
 frame_1 = Frame(master=app)
@@ -167,8 +201,12 @@ dashBoardCheck.pack(pady=12, padx=10)
 
 button_2 = Button(master=frame_1, command=start_callback, text="Start")
 button_2.pack(pady=12, padx=10,side="top",fill="both")
+
+button_2 = Button(master=frame_1, command=stop_callback, text="Stop")
+button_2.pack(pady=12, padx=10,side="top",fill="both")
+
 strfooter = StringVar()
-strfooter.set("MavProxy Easy Router GUI V.0.1 by Alireza Ghaderi")
+strfooter.set("MavProxy Easy Router GUI V.0.2 by Alireza Ghaderi")
 footerLabel = Label( app ,textvariable=strfooter, relief=RAISED )
 
 
