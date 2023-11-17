@@ -21,6 +21,11 @@ MavRouter is an open-source graphical user interface (GUI) application designed 
 - [MAVProxy](https://ardupilot.org/mavproxy/), which can be installed via pip or from the official site.
 
 
+
+### Using Binary File
+
+Pre-built binaries for macOS and Windows and Ubuntu 22.04 are available on the [releases page](https://github.com/alireza787b/mavRouter/releases). These executables include all necessary dependencies, offering a straightforward setup.
+
 ### Getting Started with Source Code
 
 If you prefer to use the source code directly, you can clone the repository and set up the environment as follows:
@@ -51,9 +56,6 @@ If you prefer to use the source code directly, you can clone the repository and 
 
 
 
-### Executables
-
-Pre-built binaries for macOS and Windows and Ubuntu 22.04 are available on the [releases page](https://github.com/alireza787b/mavRouter/releases). These executables include all necessary dependencies, offering a straightforward setup.
 
 ## Usage
 
