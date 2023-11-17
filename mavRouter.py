@@ -43,7 +43,10 @@ This project is open-sourced under the MIT license. Feel free to use, modify, an
 as per the license agreement.
 
 Build Binary:
+Windows:
 pyinstaller --clean --onefile --add-data "favicon.ico;." --icon=favicon.ico mavRouter.py
+MacOS:
+pyinstaller --clean --onefile --add-data "favicon.ico:." mavRouter.py
 
 """
 
