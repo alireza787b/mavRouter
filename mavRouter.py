@@ -147,14 +147,15 @@ def setup_gui():
     frame_source.pack(fill="both", expand=True, pady=(5, 20))
 
     sourceType = StringVar(value="Serial")
-    Label(frame_source, text="Source Type:").pack(anchor='w')
-    Radiobutton(frame_source, text="Serial", variable=sourceType, value="Serial", command=lambda: update_source(sourceType)).pack(anchor='w')
-    Radiobutton(frame_source, text="UDP", variable=sourceType, value="UDP", command=lambda: update_source(sourceType)).pack(anchor='w')
-
-    label_source = Label(frame_source, text="Serial Port:")
-    label_source.pack(anchor='w')
     sourceInput = StringVar(value="Select Port")
-    comList = OptionMenu(frame_source, sourceInput, *serial_ports())
+
+    # Serial/UDP input setup
+    if serial_ports():  # if there are available serial ports
+        comList = OptionMenu(frame_source, sourceInput, *serial_ports())
+    else:
+        sourceInput.set("No Serial Ports")
+        comList = OptionMenu(frame_source, sourceInput, "No Serial Ports")
+
     comList.pack(fill="both", anchor='w')
 
     label_baud = Label(frame_source, text="Baud Rate:")
