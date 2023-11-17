@@ -41,6 +41,10 @@ Ensure that MAVProxy is correctly installed and configured on your system before
 License:
 This project is open-sourced under the MIT license. Feel free to use, modify, and distribute 
 as per the license agreement.
+
+Build Binary:
+pyinstaller --clean --onefile --add-data "favicon.ico;." --icon=favicon.ico mavRouter.py
+
 """
 
 
@@ -126,13 +130,13 @@ def terminate_process(process):
 def setup_gui():
     app = Tk()
     app.geometry("600x700")  # Adjusted for additional space
-    app.title("Mavproxy GUI Router V1.0")
+    app.title("MavRouter V1.0")
 
     global comList, udpEntry, baudEnt, label_source, label_baud
     frame_1 = Frame(master=app, padx=10, pady=10)
     frame_1.pack(fill="both", expand=True)
 
-    Label(frame_1, text="Mavproxy Router Configuration", font=("Arial", 16, "bold")).pack(side="top", pady=(0, 10))
+    Label(frame_1, text="MavRouter V1.0", font=("Arial", 16, "bold")).pack(side="top", pady=(0, 10))
 
     # Source Section
     Label(frame_1, text="Source Configuration", font=("Arial", 12, "bold")).pack(anchor='w')
@@ -198,7 +202,7 @@ def setup_gui():
     stop_button.pack(fill="both", pady=5)
 
     # Footer
-    footerLabel = Label(app, text="MavProxy Easy Router GUI V1.0 by Alireza Ghaderi", relief=RAISED)
+    footerLabel = Label(app, text="MavProxy Easy Router GUI V1.0", relief=RAISED)
     footerLabel.pack(side="bottom", fill="x")
     footerLink = Label(app, fg="blue", cursor="hand2", text="GitHub: Alireza787b")
     footerLink.bind("<Button-1>", lambda e: hyperLink("https://github.com/alireza787b"))
@@ -221,7 +225,7 @@ def update_source(sourceTypeVar):
         udpEntry.pack_forget()
     else:
         # Show UDP-related widget
-        label_source.config(text="UDP Address:")
+        label_source.config(text="Source UDP Address:")
         label_source.pack(anchor='w')
         udpEntry.pack(fill="both", anchor='w')
         # Hide Serial-related widgets
