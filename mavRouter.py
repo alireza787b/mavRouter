@@ -45,7 +45,7 @@ as per the license agreement.
 Build Binary:
 Windows:
 pyinstaller --clean --onefile --add-data "favicon.ico;." --icon=favicon.ico mavRouter.py
-MacOS:
+MacOS and Linux:
 pyinstaller --clean --onefile --add-data "favicon.ico:." mavRouter.py
 
 """
